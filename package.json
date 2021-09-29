@@ -1,0 +1,25 @@
+{
+  "name": "jm-jsruntime",
+  "version": "1.0.0",
+  "description": "js runtime",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js",
+    "push": "npm publish --registry=https://registry.npmjs.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jiamao/jm-jsruntime.git"
+  },
+  "keywords": [
+    "javascript",
+    "run",
+    "code"
+  ],
+  "author": "jiamao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jiamao/jm-jsruntime/issues"
+  },
+  "homepage": "https://github.com/jiamao/jm-jsruntime#readme"
+}

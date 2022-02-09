@@ -8,6 +8,33 @@ function decodeJSON(js, option) {
     return runScript(code, option);
 }
 
+// 把object序列化成字josn串
+function encodeJSON(obj, deep=0) {
+    if(!obj || (typeof obj !== 'object' && typeof obj !== 'function')) return obj;
+    if(typeof obj === 'function') return obj.toString();
+
+    const newObj = {};
+    for(const key of Object.getOwnPropertyNames(obj)) {
+        const v = obj[key];
+        if(typeof v === 'object') {
+            newObj[key] = encodeJSON(v, deep + 1);
+        }
+        else if(typeof v === 'function') {
+            newObj[key] = `___function::start ${v.toString()}___function::end `.replace(/[\r\n]/g, "");
+        }
+        else {
+            newObj[key] = v;
+        }
+    } 
+    // 第一层直接返回字符串结果
+    if(deep === 0) {
+        let str = JSON.stringify(newObj);
+        str = str.replace(/"___function::start\s/g, '').replace(/___function::end\s"/g, '');
+        return str;
+    }
+    return newObj;
+}
+
 // 把文本参数中的变量 ${} 处理
 function decodeContent(content, option) {
     const code = `return \`${content.replace(/`/g, "\\`")}\``;
@@ -41,6 +68,7 @@ function runScript(code, option) {
 }
 
 module.exports = {
+    encodeJSON,
     decodeJSON,
     decodeContent,
     runScript

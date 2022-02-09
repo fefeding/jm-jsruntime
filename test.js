@@ -1,18 +1,29 @@
 
 const {
+    encodeJSON,
     decodeJSON,
     decodeContent,
     runScript
 } = require('./index');
 
-const json = decodeJSON(`{
-    fun: ()=>{
-        }, 
-    prop: '1', 
-    obj: {
-        a: 1
+const str = encodeJSON({
+    "pro1": "1",
+    "obj": {
+        "p2": 1,
+        "fun": ()=>{
+            console.log(2);
+        },
+        "obj": {
+            "p3": 0,
+            "fun": function (a) {
+                return a;
+            }
+        }
     }
-}`);
+});
+console.log(str);
+
+const json = decodeJSON(str);
 
 console.log('json', json);
 

@@ -4,6 +4,7 @@
 # 解析带函数属性的json
 ```js
 const {
+    encodeJSON,
     decodeJSON,
     decodeContent,
     runScript
@@ -19,6 +20,30 @@ const json = decodeJSON(`{
 }`);
 
 console.log('json', json);
+```
+
+# 序列化带函数的json
+```js
+const {
+    encodeJSON
+} = require('jm-jsruntime');
+
+const str = encodeJSON({
+    "pro1": "1",
+    "obj": {
+        "p2": 1,
+        "fun": ()=>{
+            console.log(2);
+        },
+        "obj": {
+            "p3": 0,
+            "fun": function (a) {
+                return a;
+            }
+        }
+    }
+});
+console.log(str);
 ```
 
 # 解析带参数的文本

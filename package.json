@@ -1,6 +1,6 @@
 {
   "name": "jm-jsruntime",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "js runtime",
   "main": "index.js",
   "scripts": {

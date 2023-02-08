@@ -13,13 +13,14 @@ const {
 const json = decodeJSON(`{
     fun: ()=>{
         }, 
-    prop: '1', 
-    obj: {
-        a: 1
-    }
+    prop: '1'
 }`);
 
 console.log('json', json);
+```
+Result：
+```js
+{ fun: [Function: fun], prop: '1' }
 ```
 
 # 序列化带函数的json
@@ -45,6 +46,10 @@ const str = encodeJSON({
 });
 console.log(str);
 ```
+Result：
+```js
+{"pro1":"1","obj":{"p2":1,"fun":()=>{            console.log(2);        },"obj":{"p3":0,"fun":function (a) {                return a;            }}}}
+```
 
 # 解析带参数的文本
 ```js
@@ -57,6 +62,10 @@ const content = decodeContent(" doecode content ${params1}, ${params2}", {
 });
 
 console.log('content', content);
+```
+Result:
+```
+doecode content p1, 3
 ```
 
 # 执行js脚本
@@ -76,18 +85,42 @@ const ret = runScript(`
 console.log('script result：', ret);
 ```
 
+Result:
+```
+add
+3
+script result： 3
+```
 ## 可以指定是promise，执行异步脚本
 
 ```js
-const ret = runScript(`
-    return await fun();
-    `, 
-    {
-        promise: true, // 指定是一个异步脚本
-        params: {
-            "fun": async function(){}
-        }
-    });
+async function testPromiseScript() {
+    const promise = runScript(`
+        // 脚本可以是一个async结果 
+        const r = await fun();
+        return r;
+        `, 
+        {
+            promise: true, // 指定是一个异步脚本
+            params: {
+                "fun": async function(){
+                    return new Promise((resolve, reject) => {
+                        // 延时5秒后返回
+                        setTimeout(()=>{
+                            resolve('timeout: 5s');
+                        }, 5000);
+                    });
+                }
+            }
+        });
+    console.log('promise:', promise);
+    console.log('async script result：', await promise);
+}
 
-console.log('async script result：', ret);
+testPromiseScript();
+```
+Result: 
+```
+promise: Promise { <pending> }
+async script result： timeout: 5s
 ```

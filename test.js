@@ -23,7 +23,11 @@ const str = encodeJSON({
 });
 console.log(str);
 
-const json = decodeJSON(str);
+const json = decodeJSON(`{
+    fun: ()=>{
+        }, 
+    prop: '1'
+}`);
 
 console.log('json', json);
 
@@ -50,4 +54,29 @@ const ret = runScript(`
     });
 
 console.log('script result：', ret);
+
+async function testPromiseScript() {
+    const promise = runScript(`
+        // 脚本可以是一个async结果 
+        const r = await fun();
+        return r;
+        `, 
+        {
+            promise: true, // 指定是一个异步脚本
+            params: {
+                "fun": async function(){
+                    return new Promise((resolve, reject) => {
+                        // 延时5秒后返回
+                        setTimeout(()=>{
+                            resolve('timeout: 5s');
+                        }, 5000);
+                    });
+                }
+            }
+        });
+    console.log('promise:', promise);
+    console.log('async script result：', await promise);
+}
+
+testPromiseScript();
 

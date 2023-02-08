@@ -53,7 +53,7 @@ Result：
 
 # 解析带参数的文本
 ```js
-const content = decodeContent(" doecode content ${params1}, ${params2}", {
+const content = decodeContent(" decode content ${params1}, ${params2}", {
 
     params: {
         "params1": "p1",
@@ -65,7 +65,7 @@ console.log('content', content);
 ```
 Result:
 ```
-doecode content p1, 3
+decode content p1, 3
 ```
 
 # 执行js脚本

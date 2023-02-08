@@ -13,6 +13,10 @@ function encodeJSON(obj, deep=0) {
     if(!obj || (typeof obj !== 'object' && typeof obj !== 'function')) return obj;
     if(typeof obj === 'function') return obj.toString();
 
+    const funcStartTag = '___function:\u200b:start';
+    const funcStartReg = new RegExp(`"${funcStartTag}\\s`, 'g');
+    const funcEndTag = '___function:\u200b:end';
+    const funcEndReg = new RegExp(`${funcEndTag}\\s"`, 'g');
     const newObj = {};
     for(const key of Object.getOwnPropertyNames(obj)) {
         const v = obj[key];
@@ -20,7 +24,7 @@ function encodeJSON(obj, deep=0) {
             newObj[key] = encodeJSON(v, deep + 1);
         }
         else if(typeof v === 'function') {
-            newObj[key] = `___function::start ${v.toString()}___function::end `.replace(/[\r\n]/g, "");
+            newObj[key] = `${funcStartTag} ${v.toString()}${funcEndTag} `.replace(/[\r\n]/g, "");
         }
         else {
             newObj[key] = v;
@@ -29,7 +33,7 @@ function encodeJSON(obj, deep=0) {
     // 第一层直接返回字符串结果
     if(deep === 0) {
         let str = JSON.stringify(newObj);
-        str = str.replace(/"___function::start\s/g, '').replace(/___function::end\s"/g, '');
+        str = str.replace(funcStartReg, '').replace(funcEndReg, '');
         return str;
     }
     return newObj;

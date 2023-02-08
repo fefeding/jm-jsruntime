@@ -6,6 +6,7 @@ const {
     runScript
 } = require('./index');
 
+
 const str = encodeJSON({
     "pro1": "1",
     "obj": {

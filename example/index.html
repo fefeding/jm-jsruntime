@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+	<head>
+		<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<style>
+        </style>
+        <script>
+            var module = {}; // 简单把模块加载进来
+        </script>
+        <script src="../index.js"></script>
+        <script>
+            function handler1(){
+                var code = document.getElementById('code1').value;
+                console.log(code);
+                var obj= module.exports.decodeJSON(code); 
+                obj.fun();
+                document.getElementById('result1').value=  module.exports.encodeJSON(obj);
+            }
+        </script>
+</head>
+<body>
+     带函数的JSON：<br />
+	<textarea rows="20" cols="40" id="code1">
+{
+    fun: ()=>{
+        alert('hello world!!')
+    }, 
+    prop: '1'
+}
+    </textarea>
+    <button onclick="handler1()">转为JSON</button>
+	<textarea rows="20" cols="30" id="result1">
+
+    </textarea>
+</body>
+</html>

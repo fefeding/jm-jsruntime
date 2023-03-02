@@ -1,6 +1,8 @@
 # jm-jsruntime
 运行js脚本或 json decode
 
+[demo](example/index.html)
+
 # 解析带函数属性的json
 ```js
 const {
@@ -22,6 +24,7 @@ Result：
 ```js
 { fun: [Function: fun], prop: '1' }
 ```
+
 
 # 序列化带函数的json
 ```js
@@ -51,7 +54,7 @@ Result：
 {"pro1":"1","obj":{"p2":1,"fun":()=>{            console.log(2);        },"obj":{"p3":0,"fun":function (a) {                return a;            }}}}
 ```
 
-# 解析带参数的文本
+# 解析带参数的文本, 适应模板文案配置
 ```js
 const content = decodeContent(" decode content ${params1}, ${params2}", {
 

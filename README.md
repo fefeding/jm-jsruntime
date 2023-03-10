@@ -1,7 +1,7 @@
 # jm-jsruntime
 运行js脚本或 json decode
 
-[demo](example/index.html)
+[demo](https://jiamao.github.io/jm-jsruntime/example/vue.html)
 
 # 解析带函数属性的json
 ```js

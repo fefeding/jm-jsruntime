@@ -1,36 +1,11 @@
-# jm-jsruntime
-运行js脚本或 json decode
 
-[demo](https://jiamao.github.io/jm-jsruntime/example/vue.html)
-
-# 解析带函数属性的json
-```js
 const {
     encodeJSON,
     decodeJSON,
     decodeContent,
     runScript
-} = require('jm-jsruntime');
+} = require('./index');
 
-const json = decodeJSON(`{
-    fun: ()=>{
-        }, 
-    prop: '1'
-}`);
-
-console.log('json', json);
-```
-Result：
-```js
-{ fun: [Function: fun], prop: '1' }
-```
-
-
-# 序列化带函数的json
-```js
-const {
-    encodeJSON
-} = require('jm-jsruntime');
 
 const str = encodeJSON({
     "pro1": "1",
@@ -48,15 +23,16 @@ const str = encodeJSON({
     }
 });
 console.log(str);
-```
-Result：
-```js
-{"pro1":"1","obj":{"p2":1,"fun":()=>{            console.log(2);        },"obj":{"p3":0,"fun":function (a) {                return a;            }}}}
-```
 
-# 解析带参数的文本, 适应模板文案配置
-```js
-const content = decodeContent(" decode content ${params1}, ${params2}", {
+const json = decodeJSON(`{
+    fun: ()=>{
+        }, 
+    prop: '1'
+}`);
+
+console.log('json', json);
+
+const content = decodeContent(" doecode content ${params1}, ${params2}", {
 
     params: {
         "params1": "p1",
@@ -65,14 +41,7 @@ const content = decodeContent(" decode content ${params1}, ${params2}", {
 });
 
 console.log('content', content);
-```
-Result:
-```
-decode content p1, 3
-```
 
-# 执行js脚本
-```js
 const ret = runScript(`
     console.log('add');
     console.log(params1+params2);
@@ -86,17 +55,7 @@ const ret = runScript(`
     });
 
 console.log('script result：', ret);
-```
 
-Result:
-```
-add
-3
-script result： 3
-```
-## 可以指定是promise，执行异步脚本
-
-```js
 async function testPromiseScript() {
     const promise = runScript(`
         // 脚本可以是一个async结果 
@@ -121,9 +80,4 @@ async function testPromiseScript() {
 }
 
 testPromiseScript();
-```
-Result: 
-```
-promise: Promise { <pending> }
-async script result： timeout: 5s
-```
+

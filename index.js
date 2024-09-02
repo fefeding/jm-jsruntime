@@ -46,7 +46,7 @@ function decodeContent(content, option) {
 }
 
 // 运行一个函数脚本，动态提供参数
-async function runScript(code, option, context=this) {
+function runScript(code, option, context=this) {
     option = option || {};
     const paramNames = []; // 函数参数名，
     const paramValues = []; // 函数调用参数值
@@ -68,7 +68,7 @@ async function runScript(code, option, context=this) {
     const fun = new FunctionConstructor(...paramNames, code);
 
     const res = fun.call(context, ...paramValues);
-    return option.promise? await res: res;
+    return res;
 }
 
 module.exports = {

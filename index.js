@@ -9,7 +9,7 @@ function decodeJSON(js, option) {
 }
 
 // 把object序列化成字josn串
-function encodeJSON(obj, deep=0) {
+function encodeJSON(obj, deep=0, replacer=1, space=2) {
     if(!obj || (typeof obj !== 'object' && typeof obj !== 'function')) return obj;
     if(typeof obj === 'function') return obj.toString();
 
@@ -21,7 +21,7 @@ function encodeJSON(obj, deep=0) {
     for(const key of Object.getOwnPropertyNames(obj)) {
         const v = obj[key];
         if(typeof v === 'object') {
-            newObj[key] = encodeJSON(v, deep + 1);
+            newObj[key] = encodeJSON(v, deep + 1, replacer, space);
         }
         else if(typeof v === 'function') {
             newObj[key] = `${funcStartTag} ${v.toString()}${funcEndTag} `.replace(/[\r\n]/g, "");
@@ -32,7 +32,7 @@ function encodeJSON(obj, deep=0) {
     } 
     // 第一层直接返回字符串结果
     if(deep === 0) {
-        let str = JSON.stringify(newObj);
+        let str = JSON.stringify(newObj, replacer, space);
         str = str.replace(funcStartReg, '').replace(funcEndReg, '');
         return str;
     }

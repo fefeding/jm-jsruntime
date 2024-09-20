@@ -8,6 +8,13 @@ function decodeJSON(js, option) {
     return runScript(code, option);
 }
 
+// 判断是否是数组
+function isArray(obj) {
+    if(typeof Array !== 'undefined' && Array.isArray) return Array.isArray(obj);
+    if(Object.prototype.toString.call(v) === '[object Array]') return true;
+    return false;
+}
+
 // 把object序列化成字josn串
 function encodeJSON(obj, deep=0, replacer=1, space=2) {
     if(!obj || (typeof obj !== 'object' && typeof obj !== 'function')) return obj;
@@ -17,19 +24,28 @@ function encodeJSON(obj, deep=0, replacer=1, space=2) {
     const funcStartReg = new RegExp(`"${funcStartTag}\\s`, 'g');
     const funcEndTag = '___function:\u200b:end';
     const funcEndReg = new RegExp(`${funcEndTag}\\s"`, 'g');
-    const newObj = {};
-    for(const key of Object.getOwnPropertyNames(obj)) {
-        const v = obj[key];
-        if(typeof v === 'object') {
-            newObj[key] = encodeJSON(v, deep + 1, replacer, space);
+
+    let newObj = {};
+    if(isArray(obj)) {
+        newObj = [];
+        for(const o of obj) {
+            newObj.push(encodeJSON(o, deep + 1, replacer, space));
         }
-        else if(typeof v === 'function') {
-            newObj[key] = `${funcStartTag} ${v.toString()}${funcEndTag} `.replace(/[\r\n]/g, "");
-        }
-        else {
-            newObj[key] = v;
-        }
-    } 
+    }
+    else {  
+        for(const key of Object.getOwnPropertyNames(obj)) {
+            const v = obj[key];
+            if(typeof v === 'object') {
+                newObj[key] = encodeJSON(v, deep + 1, replacer, space);
+            }
+            else if(typeof v === 'function') {
+                newObj[key] = `${funcStartTag} ${v.toString()}${funcEndTag} `.replace(/[\r\n]/g, "");
+            }
+            else {
+                newObj[key] = v;
+            }
+        } 
+    }
     // 第一层直接返回字符串结果
     if(deep === 0) {
         let str = JSON.stringify(newObj, replacer, space);

@@ -19,10 +19,13 @@ const str = encodeJSON({
             "fun": function (a) {
                 return a;
             }
-        }
+        },
+        "arr": [
+            1,2,3
+        ]
     }
 });
-console.log(str);
+console.log('encodeJSON',str);
 
 const json = decodeJSON(`{
     fun: ()=>{

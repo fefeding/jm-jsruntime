@@ -1,8 +1,24 @@
 {
   "name": "jm-jsruntime",
-  "version": "1.0.7",
-  "description": "js runtime",
+  "version": "1.0.8",
+  "description": "Evaluate JavaScript stored as data: run scripts, encode/decode object literals with functions, and interpolate template text",
   "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "require": "./index.js",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "README.md",
+    "README.zh-CN.md",
+    "LICENSE"
+  ],
   "scripts": {
     "test": "node test.js",
     "push": "npm publish --registry=https://registry.npmjs.org"
@@ -13,13 +29,20 @@
   },
   "keywords": [
     "javascript",
-    "run",
-    "code"
+    "runtime",
+    "eval",
+    "json",
+    "function",
+    "template"
   ],
   "author": "jiamao",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jiamao/jm-jsruntime/issues"
   },
-  "homepage": "https://github.com/jiamao/jm-jsruntime#readme"
+  "homepage": "https://github.com/jiamao/jm-jsruntime#readme",
+  "engines": {
+    "node": ">=14"
+  },
+  "sideEffects": false
 }

@@ -11,7 +11,7 @@ A tiny, zero-dependency runtime for evaluating JavaScript that is stored as **da
 
 Typical uses: configuration objects with behaviour hooks, template copy stored in a database, low-code / rule engines, and quick scripted experiments.
 
-[Live demo](https://jiamao.github.io/jm-jsruntime/example/index.html)
+[Live demo](https://fefeding.github.io/jm-jsruntime/example/index.html)
 
 > **Security:** this library compiles strings with `new Function`, which is equivalent to `eval`. It is **not a sandbox**. Execute trusted code only. See [Security](#security).
 
